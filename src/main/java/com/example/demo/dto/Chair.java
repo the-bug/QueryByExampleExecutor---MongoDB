@@ -8,9 +8,6 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 public class Chair {
-
 	private String color;
-
 	private Long countOfLegs;
-
 }

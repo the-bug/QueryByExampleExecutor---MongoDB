@@ -10,8 +10,5 @@ import java.util.List;
 @Builder
 @Jacksonized
 public class Room {
-
 	private List<Chair> chairs;
-
-
 }

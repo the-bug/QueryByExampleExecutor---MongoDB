@@ -34,7 +34,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 
 	@NotNull
 	private static MongoDBContainer getMongoDBContainer() {
-		MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:5.0.20"));
+		final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:5.0.20"));
 		mongoDBContainer.setPortBindings(List.of("27017:27017"));
 		return mongoDBContainer;
 	}
@@ -43,7 +43,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 	private MyRepository repository;
 
 	private static House getHouse1() {
-		List<Chair> hr1c = List.of( //
+		final List<Chair> hr1c = List.of( //
 				Chair.builder().color("Green") //
 						.countOfLegs(4L) //
 						.build(), //
@@ -53,7 +53,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 		);
 
 
-		List<Chair> hr2c = List.of( //
+		final List<Chair> hr2c = List.of( //
 				Chair.builder().color("Green") //
 						.countOfLegs(4L) //
 						.build(), //
@@ -64,7 +64,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 						.countOfLegs(4L) //
 						.build() //
 		);
-		House house = House.builder() //
+		return House.builder() //
 				.name("house1").rooms( //
 						List.of( //
 								Room.builder() //
@@ -75,11 +75,10 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 										.build() //
 								//
 						)).build();
-		return house;
 	}
 
 	private static House getHouse2() {
-		List<Chair> hr1c = List.of( //
+		final List<Chair> hr1c = List.of( //
 				Chair.builder().color("Green") //
 						.countOfLegs(4L) //
 						.build(), //
@@ -89,7 +88,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 		);
 
 
-		List<Chair> hr2c = List.of( //
+		final List<Chair> hr2c = List.of( //
 				Chair.builder().color("Yellow") //
 						.countOfLegs(4L) //
 						.build(), //
@@ -100,7 +99,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 						.countOfLegs(5L) //
 						.build() //
 		);
-		House house = House.builder()//
+		return House.builder()//
 				.name("house2").rooms( //
 						List.of( //
 								Room.builder() //
@@ -111,26 +110,25 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 										.build() //
 								//
 						)).build();
-		return house;
 	}
 
 	@Test
 	@SneakyThrows
 	void contextLoads() {
 
-		House house1hasChairWith3Legs = getHouse1();
-		House house2hasChairWith4Legs = getHouse2();
-		List<House> testData = List.of(house1hasChairWith3Legs, house2hasChairWith4Legs);
+		final House house1hasChairWith3Legs = getHouse1();
+		final House house2hasChairWith5Legs = getHouse2();
+		final List<House> testData = List.of(house1hasChairWith3Legs, house2hasChairWith4Legs);
 		repository.insert(testData);
 
-		ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreNullValues();
+		final ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreNullValues();
 
-		House probe = House.builder()
+		final House probe = House.builder()
 				.rooms(List.of(Room.builder().chairs(List.of(Chair.builder().countOfLegs(3L).build())).build()))
 				.build();
-		Example<House> example = Example.of(probe, matcher);
+		final Example<House> example = Example.of(probe, matcher);
 
-		List<House> result = repository.findAll(example); // empty result
+		final List<House> result = repository.findAll(example); // empty result
 		assertEquals(1, result.size());
 	}
 
