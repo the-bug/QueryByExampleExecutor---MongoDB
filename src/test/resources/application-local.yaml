@@ -1,0 +1,14 @@
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
+spring:
+  data:
+    mongodb:
+      database: dev
+      port: 27017
