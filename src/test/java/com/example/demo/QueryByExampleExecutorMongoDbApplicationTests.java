@@ -118,7 +118,7 @@ class QueryByExampleExecutorMongoDbApplicationTests {
 
 		final House house1hasChairWith3Legs = getHouse1();
 		final House house2hasChairWith5Legs = getHouse2();
-		final List<House> testData = List.of(house1hasChairWith3Legs, house2hasChairWith4Legs);
+		final List<House> testData = List.of(house1hasChairWith3Legs, house2hasChairWith5Legs);
 		repository.insert(testData);
 
 		final ExampleMatcher matcher = ExampleMatcher.matchingAll().withIgnoreNullValues();
